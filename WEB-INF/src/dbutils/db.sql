@@ -24,7 +24,7 @@ create table if not exists login_table(_id int auto_increment not null,
 
 create table if not exists room(_id int auto_increment not null,
                                 type enum('AC','No/AC'),
-                                -- location 
+                                location int,
                                 charge  int,
                                 r_status enum("AVAILABLE","NOAVAILABLE"),
                                 p_status enum("PAID","NOPAID"),

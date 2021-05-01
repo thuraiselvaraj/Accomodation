@@ -16,6 +16,31 @@ public class LeaveRoom extends HttpServlet{
     response.setContentType("application/json");
     }
 
-    
+    public String leave(LeaveRoomBean lbean){
+    try{
+        Connection con  = DBConnection.getConnection();
+        PreparedStatement ps = con.prepareStatement("update room set r_status=?,s_id=0 where _id=?;");
+        String Message="";
+        ps.setString(1,"AVAILABLE");
+        ps.setInt(2,lbean.room_id);
+        if(ps.executeUpdate()>0){
+            Message="SUCCESS";
+        }
+        else Message="NO_SUCCESS";
+        rs.close();
+        ps.close();
+        return Message;
+       }
+    catch(Exception e){
+        e.printStackTrace();
+        try{
+            con.close();
+        }
+        catch(Exception ex){ex.printStackTrace();}
+        return "ERROR";
+        }   
+    }
+
+
 
 }

@@ -25,7 +25,7 @@ public class UpdateRoom extends HttpServlet{
             ps.setString(1,ubean.type);
             ps.setInt(2,ubean.charge);
             ps.setString(3,ubean.available);
-            ps.setString(3,ubean.paymentDone);
+            ps.setString(4,ubean.paymentDone);
             if(ps.executeUpdate()>0){
                 Message="SUCCESS";
             }

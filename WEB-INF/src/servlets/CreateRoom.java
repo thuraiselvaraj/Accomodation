@@ -14,4 +14,32 @@ public class CreateRoom extends HttpServlet{
     response.setContentType("application/json");
     
     }
-}
+
+    public String createRoom(RoomBean rbean){
+        try{
+            Connection con  = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement("insert into room(type,location,charge,r_status,p_status);");
+            String Message="";
+            ps.setString(1,rbean.type);
+            ps.setString(2,rbean.location);
+            ps.setInt(3,rbean.charge);
+            ps.setString(4,rbean.available);
+            ps.setString(5,rbean.paymentDone);
+            if(ps.executeUpdate()>0){
+                Message="SUCCESS";
+            }
+            else Message="NO_SUCCESS";
+            rs.close();
+            ps.close();
+            return Message;
+           }
+        catch(Exception e){
+            e.printStackTrace();
+            try{
+                con.close();
+            }
+            catch(Exception ex){ex.printStackTrace();}
+            return "ERROR";
+            }   
+    }
+    }
