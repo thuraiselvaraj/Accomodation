@@ -1,5 +1,5 @@
 package com.app.beans;
-public class RoomBean {
+public class UpdateBean {
     public int room_id;
     public String type;
     // public String location;

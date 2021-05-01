@@ -9,29 +9,37 @@ import java.sql.ResultSetMetaData;
 import java.sql.PreparedStatement;
 import com.google.gson.Gson;
 import com.app.beans.*;
+import java.util.*;
 
-public class GetRoom extends HttpServlet{
+public class GetRooms extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
+    List<ExtendedRoomBean> al=new ArrayList<ExtendedRoomBean>();
     }
 
-    public String Getroom(SearchAndGetRoom room,ExtendedRoomBean rb){
+    public String Getrooms(List al){
         try{
             Connection con  = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from room where _id=?");
+            PreparedStatement ps = con.prepareStatement("select * from login_table where _id=?");
             ps.setInt(1,room.room_id);
             ResultSet rs=ps.executeQuery();
-            if(rs.next()){
+            boolean flag=false;
+            while(rs.next()){
+                flag=true;
+                ExtendedRoomBean rb=new ExtendedRoomBean();
                 rb.room_id=room.room_id;
                 rb.type=rs.getString("type");
                 rb.charge=rs.getInt("charge");
-                rb.available=rs.getString("r_status").equals("AVAILABLE") ? true : false;
-                rb.paymentDone=rs.getString("p_status").equals("PAID") ? true : false;
+                rb.available=rs.getString("r_status");
+                rb.paymentDone=rs.getString("p_status");
                 rb.s_id= rs.getInt("s_id");
-                rs.close();
-                ps.close();
-                return "SUCCESS";
+                al.add(rb);
+            }
+            rs.close();
+            ps.close();
+            if(flag){
+              return "SUCCESS";
             }
            else{
                return "NO_DATA_FOUND";

@@ -10,25 +10,24 @@ import java.sql.PreparedStatement;
 import com.google.gson.Gson;
 import com.app.beans.*;
 
-public class GetRoom extends HttpServlet{
+public class GetSelfRoom extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
     }
-
-    public String Getroom(SearchAndGetRoom room,ExtendedRoomBean rb){
+  ///s_d can be get from request attr;
+    public String GetSelfroom(int s_id,RoomBean rb){
         try{
             Connection con  = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from room where _id=?");
-            ps.setInt(1,room.room_id);
+            PreparedStatement ps = con.prepareStatement("select * from room where s_id=?");
+            ps.setInt(1,s_id);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
-                rb.room_id=room.room_id;
+                rb.room_id=rs.getInt("_id");
                 rb.type=rs.getString("type");
                 rb.charge=rs.getInt("charge");
-                rb.available=rs.getString("r_status").equals("AVAILABLE") ? true : false;
-                rb.paymentDone=rs.getString("p_status").equals("PAID") ? true : false;
-                rb.s_id= rs.getInt("s_id");
+                rb.available=rs.getString("r_status");
+                rb.paymentDone=rs.getString("p_status");
                 rs.close();
                 ps.close();
                 return "SUCCESS";

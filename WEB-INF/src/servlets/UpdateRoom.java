@@ -9,34 +9,31 @@ import java.sql.ResultSetMetaData;
 import java.sql.PreparedStatement;
 import com.google.gson.Gson;
 import com.app.beans.*;
+import java.util.*;
 
-public class GetRoom extends HttpServlet{
+public class UpdateRoom extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
     }
 
-    public String Getroom(SearchAndGetRoom room,ExtendedRoomBean rb){
+    public String Update(UpdateBean ubean){
         try{
             Connection con  = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from room where _id=?");
-            ps.setInt(1,room.room_id);
-            ResultSet rs=ps.executeQuery();
-            if(rs.next()){
-                rb.room_id=room.room_id;
-                rb.type=rs.getString("type");
-                rb.charge=rs.getInt("charge");
-                rb.available=rs.getString("r_status").equals("AVAILABLE") ? true : false;
-                rb.paymentDone=rs.getString("p_status").equals("PAID") ? true : false;
-                rb.s_id= rs.getInt("s_id");
-                rs.close();
-                ps.close();
-                return "SUCCESS";
+            PreparedStatement ps = con.prepareStatement("update room set type=?,charge=?,r_status=?,p_status=? where _id=?;");
+            String Message="";
+            ps.setString(1,ubean.type);
+            ps.setInt(2,ubean.charge);
+            ps.setString(3,ubean.available);
+            ps.setString(3,ubean.paymentDone);
+            if(ps.executeUpdate()>0){
+                Message="SUCCESS";
             }
-           else{
-               return "NO_DATA_FOUND";
+            else Message="NO_SUCCESS";
+            rs.close();
+            ps.close();
+            return Message;
            }
-        }
         catch(Exception e){
             e.printStackTrace();
             try{
