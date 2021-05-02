@@ -1,4 +1,4 @@
 package com.app.beans;
-public class AddStudentRoom {
+public class AddStudentRoomBean {
     public int room_id;
 }

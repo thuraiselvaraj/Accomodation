@@ -4,3 +4,5 @@ public class TestBean {
    String name="chella";
    int age=12; 
 }
+
+

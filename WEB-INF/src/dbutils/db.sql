@@ -25,12 +25,10 @@ create table if not exists room(_id int auto_increment not null,
                                 r_status enum("AVAILABLE","NOAVAILABLE"),
                                 p_status enum("PAID","NOPAID"),
                                 s_id int,
-                                foreign key(s_id) references login_table(_id),
                                 primary key(_id)
                                 );
 
 create table if not exists session_table(_id int,
-                                        session_key varchar(80),
-                                        foreign key(_id) references login_table(_id)
+                                        session_key varchar(80)
                                 );
 

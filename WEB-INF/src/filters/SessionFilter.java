@@ -28,7 +28,7 @@ public class SessionFilter implements Filter{
         }
         try{
         Connection con=DBConnection.getConnection();
-        PreparedStatement ps=con.prepareStatement("select login_table.type from session_table join login_table using(_id) where session_key=?");
+        PreparedStatement ps=con.prepareStatement("select login_table.type,login_table._id from session_table join login_table using(_id) where session_key=?");
         ps.setString(1,session_key);
         System.out.println(ps);
         ResultSet rs=ps.executeQuery();
@@ -37,6 +37,7 @@ public class SessionFilter implements Filter{
            System.out.println("Found session");
            type=rs.getString("type");
            req.setAttribute("type",type);
+           req.setAttribute("id",rs.getInt("_id"));
            rs.close();
            ps.close();
            String path = ((HttpServletRequest) request).getRequestURI();

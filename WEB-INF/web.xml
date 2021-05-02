@@ -8,7 +8,14 @@
 <url-pattern>/Test</url-pattern>
 </servlet-mapping>
 
-
+<servlet> 
+ <servlet-name>DeleteRoom</servlet-name>
+ <servlet-class>com.app.servlets.DeleteRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>DeleteRoom</servlet-name>
+<url-pattern>/deleteRoom</url-pattern>
+</servlet-mapping>
 
 <servlet> 
  <servlet-name>CreateRoom</servlet-name>
@@ -18,6 +25,55 @@
 <servlet-name>CreateRoom</servlet-name>
 <url-pattern>/createRoom</url-pattern>
 </servlet-mapping>
+
+
+<servlet> 
+ <servlet-name>GetStudentHome</servlet-name>
+ <servlet-class>com.app.servlets.GetSelfRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>GetStudentHome</servlet-name>
+<url-pattern>/getStudentHome</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+ <servlet-name>GetAdminHome</servlet-name>
+ <servlet-class>com.app.servlets.GetRooms</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>GetAdminHome</servlet-name>
+<url-pattern>/getAdminHome</url-pattern>
+</servlet-mapping>
+
+
+<servlet> 
+ <servlet-name>AddStudentRoom</servlet-name>
+ <servlet-class>com.app.servlets.AddStudentRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>AddStudentRoom</servlet-name>
+<url-pattern>/addStudentRoom</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+ <servlet-name>UpdateRoom</servlet-name>
+ <servlet-class>com.app.servlets.UpdateRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>UpdateRoom</servlet-name>
+<url-pattern>/updateRoom</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+ <servlet-name>LeaveRoom</servlet-name>
+ <servlet-class>com.app.servlets.LeaveRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>LeaveRoom</servlet-name>
+<url-pattern>/leaveRoom</url-pattern>
+</servlet-mapping>
+
+
 <!-- <filter>
 <filter-name>sessionFilter</filter-name>
 <filter-class>com.app.filters.SessionFilter</filter-class>

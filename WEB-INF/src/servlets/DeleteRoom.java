@@ -14,23 +14,31 @@ import java.io.*;
 import com.app.beans.*;
 import java.util.*;
 
-public class LeaveRoom extends HttpServlet{
+public class DeleteRoom extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
-    BufferedReader reader = request.getReader();
+    
+    System.out.println("DeleteROom");
     Gson gson = new Gson();
-    LeaveRoomBean rb = gson.fromJson(reader,LeaveRoomBean.class);
-    response.getWriter().write(gson.toJson(new ReturnBean(leave(rb))));
+     // String type=(String)request.getAttribute("type");
+     String type="ADMIN";
+    if(type.equals("ADMIN")){
+        BufferedReader reader = request.getReader();
+        LeaveRoomBean rb = gson.fromJson(reader,LeaveRoomBean.class);
+        response.getWriter().write(gson.toJson(new ReturnBean(delete(rb))));
+    }
+    else{
+        response.getWriter().write(gson.toJson(new ReturnBean("YOU ARE NOT SUPPOSED TO DELETE ROOM")));
+    }
     }
 
-    public String leave(LeaveRoomBean lbean){
+    public String delete(LeaveRoomBean lbean){
         Connection con  = DBConnection.getConnection();
     try{
-        PreparedStatement ps = con.prepareStatement("update room set r_status=?,s_id=null where _id=?;");
+        PreparedStatement ps = con.prepareStatement("delete from room where _id=?;");
         String Message="";
-        ps.setString(1,"AVAILABLE");
-        ps.setInt(2,lbean.room_id);
+        ps.setInt(1,lbean.room_id);
         if(ps.executeUpdate()>0){
             Message="SUCCESS";
         }

@@ -26,3 +26,5 @@ var data={
     }
   ]
 }
+
+data=[{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAILABLE","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"}]

@@ -1,5 +1,6 @@
 package com.app.servlets;
 import javax.servlet.http.*;
+import javax.servlet.*;
 import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.sql.PreparedStatement;
 import com.google.gson.Gson;
+import com.app.dbutils.DBConnection;
+import java.io.*;
 import com.app.beans.*;
 import java.util.*;
 
@@ -15,25 +18,28 @@ public class GetRooms extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
-    List<ExtendedRoomBean> al=new ArrayList<ExtendedRoomBean>();
+    Gson gson = new Gson();
+        BufferedReader reader = request.getReader();
+        RoomBean rb = gson.fromJson(reader,RoomBean.class);
+        List al=new ArrayList<RoomBean>();
+        Getrooms(al);
+        response.getWriter().write(gson.toJson(al));
     }
 
     public String Getrooms(List al){
+        Connection con  = DBConnection.getConnection();
         try{
-            Connection con  = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("select * from login_table where _id=?");
-            ps.setInt(1,room.room_id);
+            PreparedStatement ps = con.prepareStatement("select * from room;");
             ResultSet rs=ps.executeQuery();
             boolean flag=false;
             while(rs.next()){
                 flag=true;
-                ExtendedRoomBean rb=new ExtendedRoomBean();
-                rb.room_id=room.room_id;
+                RoomBean rb=new RoomBean();
+                rb.room_id=rs.getInt("_id");
                 rb.type=rs.getString("type");
                 rb.charge=rs.getInt("charge");
                 rb.available=rs.getString("r_status");
                 rb.paymentDone=rs.getString("p_status");
-                rb.s_id= rs.getInt("s_id");
                 al.add(rb);
             }
             rs.close();
@@ -52,6 +58,6 @@ public class GetRooms extends HttpServlet{
             }
             catch(Exception ex){ex.printStackTrace();}
             return "ERROR";
-            }   
+            } 
     }
 }

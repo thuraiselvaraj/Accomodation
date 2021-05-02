@@ -15,6 +15,7 @@
         var payload={
         };
         function Onchange(gp,val){
+            console.log(gp,val);
             payload[gp]=val;
         }
     
@@ -89,10 +90,10 @@
     <div data-toggle="buttons">
         <div class="btn-group btn-group-justified">
             <label class="btn btn-default" checked>
-                <input type="radio" checked onchange="Onchange('available','AVAILABLE')"> Available
+                <input type="radio" onchange="Onchange('available','AVAILABLE')"> Available
             </label>
             <label class="btn btn-default">
-                <input type="radio"onchange="Onchange('available','NOAVAILABLE')"> Not Available
+                <input type="radio" onchange="Onchange('available','NOAVAILABLE')"> Not Available
             </label>
     </div>
     </div>

@@ -10,17 +10,28 @@
 </head>
 <body>
     
-  <div class="container " id="hide">
-  <h2>Add Room</h2>
+  <div class="container  "  style="margin-top:100px;" id="hide">
+  <h2>Student Home</h2>
 
 <script>
   var payload={};
-  function Onchange(gp,val){
+  function Join(gp,val){
+      payload={}
       payload[gp]=val;
+      console.log(gp,val)
+      createPayload("/project/addStudentRoom");
   }
 
-  function createPayload(){
-      fetch("/project/", {
+  function Vacate(gp,val){
+      payload={}
+      payload[gp]=val;
+      console.log(gp,val)
+      createPayload("/project/leaveRoom");
+  }
+
+
+  function createPayload(url){
+      fetch(url, {
       method: 'POST', 
       credentials: 'same-origin', 
       headers: {
@@ -30,79 +41,77 @@
       body: JSON.stringify(payload) 
      }).then(response => response.json())
     .then(data =>{
-       if(data=="SUCCESS"){
-         location.reload();
-       }    
-       else{
-         setErrorMessage(data);
-       }
+         setErrorMessage(JSON.stringify(data));
       });
   }
 
-  function getData(x,all){
-      fetch(url, {
+  function setErrorMessage(data){
+        document.getElementById("mod").innerText=data;
+        $('#myModal').modal('show'); 
+        }
+
+  function getData(){
+      fetch("/project/getStudentHome", {
       method: 'GET', 
       credentials: 'same-origin', 
       headers: {
       'Content-Type': 'application/json'
       },
-      referrerPolicy: 'no-referrer',  
-      body: JSON.stringify({room_id:x}) 
-  }).then(response => response.json())
-    .then(console.log)
+      referrerPolicy: 'no-referrer', 
+      }).then(response => response.json())
+    .then(data=>{
+        console.log(data);
+        var html = '<div class="container" style="margin-top:10px;"><table class="table table-hover table-bordered">';
+        html += '<tr>';
+        Actions="No Rooms available now"
+        $.each(data[0], function(index, value){
+            html += '<th>'+index+'</th>';
+            Actions="Actions";
+            
+            
+        });
+        html += `<th>${Actions}</th>`;
+        html += '</tr>';
+        $.each(data, function(index, value){
+            html += '<tr>';
+            console.log(index,value)
+            $.each(value, function(index2, value2){
+                html += '<td>'+value2+'</td>';
+            });
+            fname=value.available=="AVAILABLE" ? "Join" : "Vacate";
+            html += `<td><button class=btn-danger onclick="${fname}('room_id',${value.room_id})">`;
+            html+=value.available=="AVAILABLE" ? "JoinRoom" : "Vacate" ;
+            html+=`</button></td>`;
+            html += '<tr>';
+        });
+        html += '</table></div>';
+        $('body').append(html);
+    });
+
    }
 
-  function setErrorMessage(data){
-      document.getElementById("mod").innerText=data;
-      $('#myModal').modal('show'); 
-  }
-data=[{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAILABLE","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"}]
-$(document).ready(function () {
-  var html = '<table class="table table-hover table-bordered">';
-  html += '<tr>';
-  var flag = 0;
-  $.each(data[0], function(index, value){
-      html += '<th>'+index+'</th>';
-  });
-  html += '<th>Actions</th>';
-  html += '</tr>';
-   $.each(data, function(index, value){
-       html += '<tr>';
-      $.each(value, function(index2, value2){
-          html += '<td>'+value2+'</td>';
-      });
-      html += `<td><button class=btn-warning onclick="">${data[index].room_id}</button>`;
-      html += value.available=="AVAILABLE" ? '<button class=btn-danger>Delete</button></td>': '</td>';
-      html += '<tr>';
-   });
-   html += '</table>';
-   $('body').append(html);
-});
+   window.onload=getData;
 </script>
 
 <div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close " id="btn" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Error Message</h4>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close " id="btn" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Error Message</h4>
+        </div>
+        <div class="modal-body">
+          <p id=mod></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='studenthome.html'">Close</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <p id=mod></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='home.html'">Close</button>
-      </div>
+      
     </div>
-    
   </div>
-</div>
 
-<style>
-    #hide{
-      display: none
-    }
-</style>
+
 
 </body>
 </html>
