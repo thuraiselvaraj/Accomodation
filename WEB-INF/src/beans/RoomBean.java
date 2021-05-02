@@ -4,6 +4,6 @@ public class RoomBean {
     public String type;
     public int location;
     public int charge;
-    public String available="AVAILABLE";
-    public String paymentDone="NOPAID";
+    public String available;
+    public String paymentDone;
 }

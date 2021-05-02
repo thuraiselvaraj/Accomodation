@@ -46,12 +46,6 @@ public class SessionFilter implements Filter{
             } else {
                 chain.doFilter(req, res);
             }
-           if(path.startsWith("/createRoom.html/") && type.equals("ADMIN")){
-             chain.doFilter(req, res);
-           }
-           else{
-            res.sendRedirect("/home.html");
-           }
           }
         else{
           System.out.println("Cannot find the session");

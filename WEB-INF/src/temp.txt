@@ -1,0 +1,2 @@
+javac -cp "../lib/*" -d ../classes ./beans/*.java
+javac -cp "../lib/*" -d ../classes ./dbutils/*.java

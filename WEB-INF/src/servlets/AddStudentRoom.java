@@ -21,5 +21,9 @@ public class AddStudentRoom extends HttpServlet{
     }
     }
 
+    public String addStudentRoom(AddStudentRoom rbean){
+        
+    }
+
 
 }

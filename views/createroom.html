@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>CreateRoom</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -13,15 +13,14 @@
 <div class="container">
     <script>
         var payload={
-            available:"AVAILABLE",
-            paymentDone:"NOPAID",
         };
         function Onchange(gp,val){
             payload[gp]=val;
         }
     
         function createPayload(){
-            fetch(url, {
+            console.log(payload);
+            fetch("/project/createRoom", {
             method: 'POST', 
             credentials: 'same-origin', 
             headers: {
@@ -30,13 +29,9 @@
             referrerPolicy: 'no-referrer', 
             body: JSON.stringify(payload) 
             }).then(res=>res.json())
-          .then(json=>{
-            if(data=="SUCCESS"){
-                location.reload();
-            }    
-            else{
-                setErrorMessage(data);
-            }
+          .then(data=>{
+             console.log(data)
+             setErrorMessage(JSON.stringify(data));
           })
         }
         function setErrorMessage(data){
@@ -46,15 +41,16 @@
     
     </script>
   <h2>Create Room</h2>
-  <form onsubmit="createPayload()">
+
+  <h5 style="color: firebrick;"> *All Fields are important dont leave any empty</h5>
     <div class="form-group">
-      <input type="number" class="form-control"  placeholder="Cost of the Room per month" name="email" min=100 max=100000 onchange="Onchange('charge',this.value)">
+      <input type="number" class="form-control"  placeholder="Cost of the Room per month" name="email" min=100 max=100000 onchange="Onchange('charge',this.value)" required="true" >
     </div>
 
     <div data-toggle="buttons">
         <div class="btn-group btn-group-justified">
             <label class="btn btn-default">
-                <input type="radio" onchange="Onchange('type','AC')">AC
+                <input type="radio"  onchange="Onchange('type','AC')">AC
             </label>
             <label class="btn btn-default">
                 <input type="radio" onchange="Onchange('type','No/AC')">No/AC
@@ -92,7 +88,7 @@
 
     <div data-toggle="buttons">
         <div class="btn-group btn-group-justified">
-            <label class="btn btn-default">
+            <label class="btn btn-default" checked>
                 <input type="radio" checked onchange="Onchange('available','AVAILABLE')"> Available
             </label>
             <label class="btn btn-default">
@@ -101,8 +97,9 @@
     </div>
     </div>
     </br>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+    <button type="button" class="btn btn-success"  onclick="window.location='home.html'">Go Home page</button>
+    <button type="submit" class="btn btn-primary" style="margin-left:90%;" onclick="createPayload()">Submit</button>
+    
 </div>
 <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog">
@@ -115,7 +112,7 @@
         <p id=mod></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='createroom.html'">Close</button>
       </div>
     </div>
     

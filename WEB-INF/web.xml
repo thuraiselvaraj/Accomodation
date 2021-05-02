@@ -16,7 +16,7 @@
 </servlet>
 <servlet-mapping>
 <servlet-name>CreateRoom</servlet-name>
-<url-pattern>/Test</url-pattern>
+<url-pattern>/createRoom</url-pattern>
 </servlet-mapping>
 <!-- <filter>
 <filter-name>sessionFilter</filter-name>

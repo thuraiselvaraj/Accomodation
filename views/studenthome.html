@@ -11,50 +11,16 @@
 <body>
     
   <div class="container " id="hide">
-  <h2>Edit Room</h2>
-  <form onsubmit="createPayload()">
-    <div class="form-group" id="charge">
-      <input type="number" class="form-control"  placeholder="Cost of the Room per month" name="email" min=100 max=100000 onchange="Onchange('charge',this.value)">
-    </div>
-
-    <div data-toggle="buttons">
-        <div class="btn-group btn-group-justified">
-            <label class="btn btn-default">
-                <input type="radio" onchange="Onchange('type','AC')">AC
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" onchange="Onchange('type','No/AC')">No/AC
-            </label>
-    </div>
-    </div>
-
-    <div data-toggle="buttons">
-        <div class="btn-group btn-group-justified">
-            <label class="btn btn-default">
-                <input type="radio" onchange="Onchange('paymentDone','PAID')"> Paid
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" checked="true" onchange="Onchange('paymentDone','NOPAID')"> Not Paid
-            </label>
-        </div>
-    </div>
-
-    </br>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
-</div>
-</br>
+  <h2>Add Room</h2>
 
 <script>
-  var payload={
-      paymentDone:"NOPAID",
-  };
+  var payload={};
   function Onchange(gp,val){
       payload[gp]=val;
   }
 
   function createPayload(){
-      fetch(url, {
+      fetch("/project/", {
       method: 'POST', 
       credentials: 'same-origin', 
       headers: {
@@ -125,7 +91,7 @@ $(document).ready(function () {
         <p id=mod></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location='home.html'">Close</button>
       </div>
     </div>
     
