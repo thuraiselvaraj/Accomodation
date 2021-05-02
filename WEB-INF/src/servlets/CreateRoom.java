@@ -12,13 +12,16 @@ public class CreateRoom extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
-    
+    BufferedReader reader = request.getReader();
+    Gson gson = new Gson();
+    RoomBean rb = gson.fromJson(reader,RoomBean.class);
+    return createRoom(rb);
     }
 
     public String createRoom(RoomBean rbean){
         try{
             Connection con  = DBConnection.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into room(type,location,charge,r_status,p_status);");
+            PreparedStatement ps = con.prepareStatement("insert into room(type,location,charge,r_status,p_status) values(?,?,?,?,?);");
             String Message="";
             ps.setString(1,rbean.type);
             ps.setString(2,rbean.location);

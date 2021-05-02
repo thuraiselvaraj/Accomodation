@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    
+  <div class="container " id="hide">
+  <h2>Edit Room</h2>
+  <form onsubmit="createPayload()">
+    <div class="form-group" id="charge">
+      <input type="number" class="form-control"  placeholder="Cost of the Room per month" name="email" min=100 max=100000 onchange="Onchange('charge',this.value)">
+    </div>
+
+    <div data-toggle="buttons">
+        <div class="btn-group btn-group-justified">
+            <label class="btn btn-default">
+                <input type="radio" onchange="Onchange('type','AC')">AC
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" onchange="Onchange('type','No/AC')">No/AC
+            </label>
+    </div>
+    </div>
+
+    <div data-toggle="buttons">
+        <div class="btn-group btn-group-justified">
+            <label class="btn btn-default">
+                <input type="radio" onchange="Onchange('paymentDone','PAID')"> Paid
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" checked="true" onchange="Onchange('paymentDone','NOPAID')"> Not Paid
+            </label>
+        </div>
+    </div>
+
+    </br>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+</br>
+
+<script>
+  var payload={
+      paymentDone:"NOPAID",
+  };
+  function Onchange(gp,val){
+      payload[gp]=val;
+  }
+
+  function createPayload(){
+      fetch(url, {
+      method: 'POST', 
+      credentials: 'same-origin', 
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      referrerPolicy: 'no-referrer', 
+      body: JSON.stringify(payload) 
+     }).then(response => response.json())
+    .then(data =>{
+       if(data=="SUCCESS"){
+         location.reload();
+       }    
+       else{
+         setErrorMessage(data);
+       }
+      });
+  }
+
+  function getData(x,all){
+      fetch(url, {
+      method: 'GET', 
+      credentials: 'same-origin', 
+      headers: {
+      'Content-Type': 'application/json'
+      },
+      referrerPolicy: 'no-referrer',  
+      body: JSON.stringify({room_id:x}) 
+  }).then(response => response.json())
+    .then(console.log)
+   }
+
+  function setErrorMessage(data){
+      document.getElementById("mod").innerText=data;
+      $('#myModal').modal('show'); 
+  }
+data=[{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAILABLE","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"},{"room_id":0,"type":"AC","location":0,"charge":0,"available":"AVAIL","paymentDone":"DONE"}]
+$(document).ready(function () {
+  var html = '<table class="table table-hover table-bordered">';
+  html += '<tr>';
+  var flag = 0;
+  $.each(data[0], function(index, value){
+      html += '<th>'+index+'</th>';
+  });
+  html += '<th>Actions</th>';
+  html += '</tr>';
+   $.each(data, function(index, value){
+       html += '<tr>';
+      $.each(value, function(index2, value2){
+          html += '<td>'+value2+'</td>';
+      });
+      html += `<td><button class=btn-warning onclick="">${data[index].room_id}</button>`;
+      html += value.available=="AVAILABLE" ? '<button class=btn-danger>Delete</button></td>': '</td>';
+      html += '<tr>';
+   });
+   html += '</table>';
+   $('body').append(html);
+});
+</script>
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close " id="btn" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Error Message</h4>
+      </div>
+      <div class="modal-body">
+        <p id=mod></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<style>
+    #hide{
+      display: none
+    }
+</style>
+
+</body>
+</html>

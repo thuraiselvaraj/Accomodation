@@ -1,6 +1,9 @@
 package com.app.servlets;
 import javax.servlet.http.*;
 import com.google.gson.Gson;
+
+import jdk.nashorn.internal.ir.ReturnNode;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +17,10 @@ public class LeaveRoom extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
+    BufferedReader reader = request.getReader();
+    Gson gson = new Gson();
+    RoomBean rb = gson.fromJson(reader,RoomBean.class);
+    Return
     }
 
     public String leave(LeaveRoomBean lbean){

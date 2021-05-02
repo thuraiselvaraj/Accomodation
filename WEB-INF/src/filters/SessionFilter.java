@@ -28,16 +28,31 @@ public class SessionFilter implements Filter{
         }
         try{
         Connection con=DBConnection.getConnection();
-        PreparedStatement ps=con.prepareStatement("select _id from session_table where session_key=?");
+        PreparedStatement ps=con.prepareStatement("select login_table.type from session_table join login_table using(_id) where session_key=?");
         ps.setString(1,session_key);
         System.out.println(ps);
         ResultSet rs=ps.executeQuery();
+        String type="";
         if(rs.next()){
            System.out.println("Found session");
-           req.setAttribute("id",rs.getString("type"));
+           type=rs.getString("type");
+           req.setAttribute("type",type);
            rs.close();
            ps.close();
-       }
+           String path = ((HttpServletRequest) request).getRequestURI();
+           System.out.println(path);
+           if (path.startsWith("/login.html/")) {
+            res.sendRedirect("/home.html");
+            } else {
+                chain.doFilter(req, res);
+            }
+           if(path.startsWith("/createRoom.html/") && type.equals("ADMIN")){
+             chain.doFilter(req, res);
+           }
+           else{
+            res.sendRedirect("/home.html");
+           }
+          }
         else{
           System.out.println("Cannot find the session");
           res.sendRedirect("/login.html");//need to be modified

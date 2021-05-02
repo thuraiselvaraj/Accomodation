@@ -8,6 +8,16 @@
 <url-pattern>/Test</url-pattern>
 </servlet-mapping>
 
+
+
+<servlet> 
+ <servlet-name>CreateRoom</servlet-name>
+ <servlet-class>com.app.servlets.CreateRoom</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>CreateRoom</servlet-name>
+<url-pattern>/Test</url-pattern>
+</servlet-mapping>
 <!-- <filter>
 <filter-name>sessionFilter</filter-name>
 <filter-class>com.app.filters.SessionFilter</filter-class>

@@ -1,11 +1,7 @@
--- a. Room id
--- b. Room type
--- c. Room location
--- d. Monthly Charge
--- e. Room Status (allocated/available)
--- f. Payment status
 
-create database if exists project;
+
+drop database if exists project;
+create database project;
 use project;
 
 set foreign_key_checks=0;
@@ -29,7 +25,8 @@ create table if not exists room(_id int auto_increment not null,
                                 r_status enum("AVAILABLE","NOAVAILABLE"),
                                 p_status enum("PAID","NOPAID"),
                                 s_id int,
-                                foreign key(s_id) references login_table(_id)
+                                foreign key(s_id) references login_table(_id),
+                                primary key(_id)
                                 );
 
 create table if not exists session_table(_id int,

@@ -9,12 +9,17 @@ import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.sql.PreparedStatement;
 import com.google.gson.Gson;
+import java.util.*;
 public class Test extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
         response.setContentType("application/json");
         Gson gson = new Gson();
-        response.getWriter().write(gson.toJson(new TestBean()));
+        List li=new ArrayList<RoomBean>();
+        for(int i=0;i<4;i++){
+            li.add(new RoomBean());
+        }
+        response.getWriter().write(gson.toJson(li));
         System.out.println("After sent");
     }
 
@@ -23,12 +28,8 @@ public class Test extends HttpServlet {
     response.setContentType("application/json");
         BufferedReader reader = request.getReader();
         Gson gson = new Gson();
-        TestBean tb = gson.fromJson(reader,TestBean.class);
-        System.out.println(tb.name+tb.age);
+        RoomBean tb = gson.fromJson(reader,RoomBean.class);
+        // System.out.println(tb.name+tb.age);
     }
 }
 
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"name":"chella","age":1232}' \
-  http://localhost:3000/project/Test
