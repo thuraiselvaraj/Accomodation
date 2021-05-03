@@ -16,8 +16,8 @@ public class CreateRoom extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
-    // String type=(String)request.getAttribute("type");
-    String type="ADMIN";
+    String type=(String)request.getAttribute("type");
+    // String type="ADMIN";
     Gson gson = new Gson();
     if(type.equals("ADMIN")){
         BufferedReader reader = request.getReader();

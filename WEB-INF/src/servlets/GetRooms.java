@@ -20,8 +20,8 @@ public class GetRooms extends HttpServlet{
     response.setContentType("application/json");
     Gson gson = new Gson();
         BufferedReader reader = request.getReader();
-        RoomBean rb = gson.fromJson(reader,RoomBean.class);
-        List al=new ArrayList<RoomBean>();
+        ExtendedRoomBean rb = gson.fromJson(reader,ExtendedRoomBean.class);
+        List al=new ArrayList<ExtendedRoomBean>();
         Getrooms(al);
         response.getWriter().write(gson.toJson(al));
     }
@@ -34,12 +34,14 @@ public class GetRooms extends HttpServlet{
             boolean flag=false;
             while(rs.next()){
                 flag=true;
-                RoomBean rb=new RoomBean();
+                ExtendedRoomBean rb=new ExtendedRoomBean();
                 rb.room_id=rs.getInt("_id");
                 rb.type=rs.getString("type");
                 rb.charge=rs.getInt("charge");
                 rb.available=rs.getString("r_status");
                 rb.paymentDone=rs.getString("p_status");
+                rb.location=rs.getInt("location");
+                rb.s_id=rs.getInt("s_id");
                 al.add(rb);
             }
             rs.close();

@@ -17,10 +17,11 @@ import java.util.*;
 public class DeleteSession extends HttpServlet{
 
     @Override
-    public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
+    public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
     Gson gson=new Gson();
     response.getWriter().write(gson.toJson(new ReturnBean(deleteSession((int)request.getAttribute("id")))));
+    response.getWriter().write("   {key : Please Refresh the page}");
     }
 
 

@@ -22,8 +22,8 @@ public class AddStudentRoom extends HttpServlet{
     Gson gson = new Gson();
     BufferedReader reader = request.getReader();
     AddStudentRoomBean rb = gson.fromJson(reader,AddStudentRoomBean.class);
-    // int s_id=(int)request.getAttribute("id");
-    int s_id=3;
+    int s_id=(int)request.getAttribute("id");
+    // int s_id=3;
     if(rb.room_id!=0){
         response.getWriter().write(gson.toJson(new ReturnBean(addStudentRoom(rb,s_id))));
     }

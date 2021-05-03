@@ -20,8 +20,8 @@ public class UpdateRoom extends HttpServlet{
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
     response.setContentType("application/json");
     Gson gson = new Gson();
-       // String type=(String)request.getAttribute("type");
-    String type="ADMIN";
+       String type=(String)request.getAttribute("type");
+    // String type="ADMIN";
     System.out.println("Update method");
     if(type.equals("ADMIN")){
         BufferedReader reader = request.getReader();

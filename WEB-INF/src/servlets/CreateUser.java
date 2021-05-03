@@ -13,7 +13,7 @@ import com.app.dbutils.DBConnection;
 import java.io.*;
 import com.app.beans.*;
 import java.util.*;
-
+import com.app.security.*;
 public class CreateUser extends HttpServlet{
    
 
@@ -40,7 +40,7 @@ public class CreateUser extends HttpServlet{
             else{
                 ps=con.prepareStatement("insert into login_table(email,password,type) values(?,?,?);");
                 ps.setString(1,sbean.email);
-                ps.setString(2,sbean.password);
+                ps.setString(2,Security.get_md5(sbean.password));
                 ps.setString(3,sbean.type);
                 ps.executeUpdate();
                 ps.close();

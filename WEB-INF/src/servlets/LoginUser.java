@@ -32,7 +32,7 @@ public class LoginUser extends HttpServlet{
         PreparedStatement ps = con.prepareStatement("select * from login_table where email=?");
         ps.setString(1,lbean.email);
         ResultSet rs=ps.executeQuery();   
-        System.out.println("Inside the loginCheked");
+        
         if(rs.next()){
             String Email=rs.getString("email");
             String Password=rs.getString("password");
@@ -40,12 +40,10 @@ public class LoginUser extends HttpServlet{
             String TYPE=rs.getString("type");
             rs.close();
             ps.close();
+            System.out.println("Inside the loginCheked");
             if(lbean.email.equals(Email)){
-                if(lbean.password.equals(Password)){
-                    String session_key=createSession(Id);
-                    Cookie cookie=new Cookie("SessionKey",session_key);
-                    response.addCookie(cookie);
-                    return "SUCCESS";
+                if(Security.get_md5(lbean.password).equals(Password)){
+                    return createSession(Id,response);
                 }
                 else{
                     return "CRED_WRONG";
@@ -64,14 +62,23 @@ public class LoginUser extends HttpServlet{
         }   
     }
 
-    public String createSession(int Id){
+    public String createSession(int Id,HttpServletResponse response){
         String SessionKey=Security.get_md5(Security.get_random_string());
         Connection con  = DBConnection.getConnection();
         try{
             PreparedStatement ps=con.prepareStatement("insert into session_table(_id,session_key) values(?,?) ;");
             ps.setString(2,SessionKey);
             ps.setInt(1,Id);
-            return "SUCCESS";
+            if(ps.executeUpdate()>0){
+                ps.close();
+                Cookie cookie=new Cookie("SessionKey",SessionKey);
+                response.addCookie(cookie);
+                return "SUCCESS";
+            }
+            else{
+                return "UNABLE TO LOGIN";
+            }
+            
         }
         catch(Exception e){
             e.printStackTrace();

@@ -21,8 +21,8 @@ public class DeleteRoom extends HttpServlet{
     
     System.out.println("DeleteROom");
     Gson gson = new Gson();
-     // String type=(String)request.getAttribute("type");
-     String type="ADMIN";
+     String type=(String)request.getAttribute("type");
+    //  String type="ADMIN";
     if(type.equals("ADMIN")){
         BufferedReader reader = request.getReader();
         LeaveRoomBean rb = gson.fromJson(reader,LeaveRoomBean.class);

@@ -3,9 +3,6 @@
 
 $(function() {
 
-	// author badge :)
-	var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color: #fff;box-shadow: 0 4px 8px rgba(0,0,0,.05);border-radius: 3px 3px 0 0;font-size: 12px;padding: 5px 10px;">By <a href="https://twitter.com/mhdnauvalazhar">@mhdnauvalazhar</a> &nbsp;&bull;&nbsp; <a href="https://www.buymeacoffee.com/mhdnauvalazhar">Buy me a Coffee</a></div>';
-	$("body").append(author);
 
 	$("input[type='password'][data-eye]").each(function(i) {
 		var $this = $(this),
@@ -70,37 +67,3 @@ $(function() {
 		form.addClass('was-validated');
 	});
 });
-   
-	    var payload={};	
-        function Onchange(gp,val){
-			  payload[gp]=val;
-		  }
-		function createPayload(url){
-			  console.log(JSON.stringify(payload) )
-			  fetch(url, {
-			  method: 'POST', 
-			  credentials: 'same-origin', 
-			  headers: {
-			  'Content-Type': 'application/json'
-			  },
-			  referrerPolicy: 'no-referrer', 
-			  body: JSON.stringify(payload) 
-			 }).then(response => response.json())
-			   .then(data =>{
-			   if(data=="SUCCESS"){
-				window.location='/';
-			   }    
-			   else{
-				 setErrorMessage(JSON.stringify(data));
-			   }
-			   payload={};
-			  });
-			}
-		function setErrorMessage(data){
-			  document.getElementById("mod").innerText=data;
-			  $('#myModal').modal('show'); 
-			}
-
-		function toggle(i){
-			document.getElementById(i=="A" ? "S" : "A").checked=false;
-		}

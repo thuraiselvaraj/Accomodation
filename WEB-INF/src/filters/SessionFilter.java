@@ -1,3 +1,4 @@
+package com.app.filters;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,16 +11,17 @@ import javax.servlet.http.*;
 import com.app.dbutils.DBConnection;
 import javax.servlet.*;
 public class SessionFilter implements Filter{
-    SessionFilter(){
-       
-    }
+    public SessionFilter(){}
     @Override
     public void doFilter(ServletRequest request,ServletResponse response,FilterChain chain) {
        
         HttpServletRequest req=(HttpServletRequest)request;
         HttpServletResponse res=(HttpServletResponse)response;
-        System.out.println("kkfkbkbdkbefkabdkabskabdsakbakbkfbasf");
+        String path = ((HttpServletRequest) req).getRequestURI();
         System.out.println(((HttpServletRequest) req).getRequestURI());
+
+
+    if(!path.contains("index") && !path.contains("register") && !path.contains("signin") && !path.contains("css") && !path.contains("js") && !path.contains("login")){
         String session_key="";
         Cookie[] cookies = null;
         cookies = req.getCookies();
@@ -46,7 +48,6 @@ public class SessionFilter implements Filter{
            req.setAttribute("id",rs.getInt("_id"));
            rs.close();
            ps.close();
-           String path = ((HttpServletRequest) req).getRequestURI();
            System.out.println(path);
            if(path.equals("/")){
                if(type.equals("ADMIN")){
@@ -55,18 +56,14 @@ public class SessionFilter implements Filter{
                else{
                 res.sendRedirect("/views/studenthome.html");
                }
-           }
-           if (path.contains("login")) {
-            res.sendRedirect("/home.html");
-            } else {
-                chain.doFilter(req, res);
-            }
+             }
+            chain.doFilter(req, res);
           }
         else{
           System.out.println("Cannot find the session");
-          res.sendRedirect("/views/login.html");//need to be modified
-      }
-      }
+              res.sendRedirect("/views/index.html");
+          }      
+        }
      catch(Exception e){
         e.printStackTrace();
         try{
@@ -74,5 +71,16 @@ public class SessionFilter implements Filter{
         }
         catch(Exception ex){ex.printStackTrace();}
     }
+
+   }
+   else{
+    try{
+        System.out.println("Inside else");
+        chain.doFilter(req, res);
+
+    }
+    catch(Exception e){e.printStackTrace();}
+    
+   }
     }
 }

@@ -29,6 +29,6 @@ create table if not exists room(_id int auto_increment not null,
                                 );
 
 create table if not exists session_table(_id int,
-                                        session_key varchar(80)
+                                        session_key varchar(100)
                                 );
 

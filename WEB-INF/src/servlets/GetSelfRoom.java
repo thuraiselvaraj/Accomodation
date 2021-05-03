@@ -22,8 +22,8 @@ public class GetSelfRoom extends HttpServlet{
         BufferedReader reader = request.getReader();
         RoomBean rb = gson.fromJson(reader,RoomBean.class);
         List al=new ArrayList<RoomBean>();
-        // int s_id=(int)request.getAttribute("id");
-         int s_id=3;
+        int s_id=(int)request.getAttribute("id");
+        //  int s_id=3;
          GetSelfroom(s_id,al);
         response.getWriter().write(gson.toJson(al));
     }
