@@ -73,13 +73,41 @@
 <url-pattern>/leaveRoom</url-pattern>
 </servlet-mapping>
 
+<servlet> 
+ <servlet-name>DeleteSession</servlet-name>
+ <servlet-class>com.app.servlets.DeleteSession</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>DeleteSession</servlet-name>
+<url-pattern>/logout</url-pattern>
+</servlet-mapping>
 
-<!-- <filter>
+<servlet> 
+ <servlet-name>CreateUser</servlet-name>
+ <servlet-class>com.app.servlets.CreateUser</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>CreateUser</servlet-name>
+<url-pattern>/signin</url-pattern>
+</servlet-mapping>
+
+<servlet> 
+ <servlet-name>LoginUser</servlet-name>
+ <servlet-class>com.app.servlets.LoginUser</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>LoginUser</servlet-name>
+<url-pattern>/login</url-pattern>
+</servlet-mapping>
+
+
+<filter>
 <filter-name>sessionFilter</filter-name>
 <filter-class>com.app.filters.SessionFilter</filter-class>
 </filter>
 <filter-mapping>
 <filter-name>sessionFilter</filter-name>
 <url-pattern>/*</url-pattern> 
-</filter-mapping> -->
+</filter-mapping>
+
 </web-app>

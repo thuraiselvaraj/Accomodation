@@ -1,2 +1,3 @@
 javac -cp "../lib/*" -d ../classes ./beans/*.java
 javac -cp "../lib/*" -d ../classes ./dbutils/*.java
+javac -cp "../lib/*:../classes" -d ../classes ./servlets/AddStudentRoom.java ./servlets/GetSelfRoom.java ./servlets/GetRooms.java ./servlets/CreateRoom.java ./servlets/LeaveRoom.java ./servlets/UpdateRoom.java ./beans/*.java ./servlets/DeleteRoom.java ./dbutils/*.java
